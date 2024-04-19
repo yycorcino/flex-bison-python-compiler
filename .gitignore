@@ -1,4 +1,4 @@
-a.out 
+compiler
 lex.yy.c
 parser.output
 parser.tab.c
