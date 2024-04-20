@@ -13,23 +13,13 @@
 
 %define parse.error verbose /* make error print more defined */
 
-%token INTEGER 
-%token IDENTIFIER 
-%token PLUS 
-%token MINUS
-%token MUL
-%token DIV
-%token POWER
-%token EQ
-%token LPARAN
-%token RPARAN
-%token LBRACE
-%token RBRACE
-%token PRINT
+%token PLUS MINUS MUL DIV POWER ASSIGN CMP_EQ LPARAN RPARAN LBRACE RBRACE COLON
+%token PRINT FOR IN WHILE RANGE TRUE FALSE
+%token IDENTIFIER INTEGER STRING
+
 %left PLUS MINUS
 %left MUL DIV
 %nonassoc UMINUS
-
 
 %%
 
@@ -38,18 +28,34 @@ program: program statements
        ;
 
 statements: exp              { printf("%d\n", $1); }
-        | IDENTIFIER EQ exp { sym[$1] = $3; } /* assignment stmt */
+        | IDENTIFIER ASSIGN exp { sym[$1] = $3; } /* assignment stmt */
         | print_stmt
+        | for_stmt
         ;
 
 print_stmt: PRINT LPARAN exp RPARAN { printf("%d\n", $3); }
 
+for_stmt: FOR IDENTIFIER IN RANGE LPARAN exp RPARAN COLON statements {
+    int continue_for = $6;
+    for(int i = 0 ; i < continue_for ; i++) {;
+        $9; /* excutes the statement in the give scope */
+    }
+}
+
+/* while_stmt: WHILE IDENTIFIER COLON statements { 
+    int i;
+    for(i=$2 ; i<$5 ; i++) {printf("%dth Loop's expression value: %d\n", i,$8);}
+} */
+
 exp: INTEGER            { $$ = $1; }
+    | TRUE              { $$ = 1; }
+    | FALSE             { $$ = 0; }
     | exp PLUS exp      { $$ = $1 + $3; }
     | exp MINUS exp     { $$ = $1 - $3; }
     | exp MUL exp       { $$ = $1 * $3; }
     | exp DIV exp       { $$ = $1 / $3; }
     | exp POWER exp     { $$ = pow($1, $3); }
+    | '"' IDENTIFIER '"' { $$ = $2; }
     | LPARAN exp LPARAN { $$ = $2; }
     ;
 

@@ -11,17 +11,25 @@
 "*"         { return MUL; }
 "/"         { return DIV; }
 "^"         { return POWER; }
-"="         { return EQ; }
-"#".*       { } /* remove comment */
+"="         { return ASSIGN; }
+"=="        { return CMP_EQ; }
 "("         { return LPARAN; }
 ")"         { return RPARAN; }
 "{"         { return LBRACE; }
 "}"         { return RBRACE; }
+":"         { return COLON; }
 ["]         { return *yytext; }
+"#".*       { } /* remove comment */
 
 "print"     { return PRINT; }
+"for"       { return FOR; }
+"in"        { return IN; }
+"while"     { return WHILE; }
+"range"     { return RANGE; }
+"True"      { return TRUE; }
+"False"     { return FALSE; }
 
-[a-z]+      { yylval = *yytext; return IDENTIFIER; }
+[a-zA-Z][a-zA-Z0-9]*      { yylval = *yytext; return IDENTIFIER; }
 [0-9]+      { yylval = atoi(yytext); return INTEGER; }
 [ \t\n]     { } /* remove whitespace */
 
