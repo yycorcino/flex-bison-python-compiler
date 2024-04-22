@@ -1,9 +1,9 @@
-
 %{
     #include <stdlib.h>
     #include "parser.tab.h"
 %}
 
+/* tokens */
 %%
 
 "+"         { return PLUS; }
@@ -11,7 +11,10 @@
 "*"         { return MUL; }
 "/"         { return DIV; }
 "^"         { return POWER; }
+"<"         { return LT; }
 "="         { return ASSIGN; }
+"-="        { return MINUS_EQ; }
+"!="        { return NOT_EQ; }
 "=="        { return CMP_EQ; }
 "("         { return LPARAN; }
 ")"         { return RPARAN; }
@@ -26,12 +29,17 @@
 "in"        { return IN; }
 "while"     { return WHILE; }
 "range"     { return RANGE; }
-"True"      { return TRUE; }
-"False"     { return FALSE; }
+"if"        { return IF; }
+"else"      { return ELSE; }
+"math.sin"  { return SIN; }
+"math.cos"  { return COS; }
+"math.tan"  { return TAN; }
+"math.log"  { return LOG; }
+
 
 [a-zA-Z][a-zA-Z0-9]*      { yylval = *yytext; return IDENTIFIER; }
-[0-9]+      { yylval = atoi(yytext); return INTEGER; }
-[ \t\n]     { } /* remove whitespace */
+[0-9]+                    { yylval = atoi(yytext); return INTEGER; }
+[ \t\n]                   { } /* remove whitespace */
 
 %%
 
