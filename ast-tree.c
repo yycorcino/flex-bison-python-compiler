@@ -1,12 +1,13 @@
 /*
- * helper functions for fb3-2
+ * Helper functions for parser.y
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
-#include "fb3-2.h"
+#include "ast-tree.h"
+int yyparse(void);
 
 /* simple symtab of fixed size */
 #define NHASH 9997
@@ -356,6 +357,12 @@ callbuiltin(struct fncall *f)
         return sqrt(v);
     case B_exp:
         return exp(v);
+    case B_sin:
+        return sin(v);
+    case B_cos:
+        return cos(v);
+    case B_tan:
+        return tan(v);
     case B_log:
         return log(v);
     case B_print:
@@ -514,7 +521,7 @@ void yyerror(char *s, ...)
 
 int main()
 {
-    printf("> ");
+    printf(">>> "); /* first print when running .exe */
     return yyparse();
 }
 

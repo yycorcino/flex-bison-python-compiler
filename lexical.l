@@ -1,9 +1,9 @@
-/* recognize tokens for the calculator */
+/* Recognize tokens for the Python */
 
 %option noyywrap nodefault yylineno
 %{
-# include "fb3-2.h"
-# include "fb3-2.tab.h"
+# include "ast-tree.h"
+# include "parser.tab.h"
 %}
 
 /* float exponent */
@@ -19,6 +19,7 @@ EXP	([Ee][-+]?[0-9]+)
 "|" |
 "," |
 ";" |
+":" |
 "(" |
 ")"     { return yytext[0]; }
 
@@ -33,17 +34,18 @@ EXP	([Ee][-+]?[0-9]+)
  /* keywords */
 
 "if"    { return IF; }
-"then"  { return THEN; }
 "else"  { return ELSE; }
 "while" { return WHILE; }
-"do"    { return DO; }
-"let"   { return LET;}
+"def"   { return DEF;}
 
  /* built in functions */
-"sqrt"  { yylval.fn = B_sqrt; return FUNC; }
-"exp"   { yylval.fn = B_exp; return FUNC; }
-"log"   { yylval.fn = B_log; return FUNC; }
-"print" { yylval.fn = B_print; return FUNC; }
+"math.sqrt"  { yylval.fn = B_sqrt; return FUNC; }
+"math.exp"   { yylval.fn = B_exp; return FUNC; }
+"math.sin"   { yylval.fn = B_sin; return FUNC; }
+"math.cos"   { yylval.fn = B_cos; return FUNC; }
+"math.tan"   { yylval.fn = B_tan; return FUNC; }
+"math.log"   { yylval.fn = B_log; return FUNC; }
+"print"      { yylval.fn = B_print; return FUNC; }
 
  /* debug hack */
 "debug"[0-9]+ { debug = atoi(&yytext[5]); printf("debug set to %d\n", debug); }

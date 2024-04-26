@@ -1,7 +1,7 @@
 all:
-	bison -d fb3-2.y
-	flex -ofb3-2.lex.c fb3-2.l
-	gcc -o $@ fb3-2.tab.c fb3-2.lex.c fb3-2func.c -lm
+	bison -d parser.y
+	flex -o lexical.lex.c lexical.l
+	gcc -o interpreter parser.tab.c lexical.lex.c ast-tree.c -lm
 
 clean:
-	rm all fb3-2.lex.c fb3-2.tab.c fb3-2.tab.h
+	rm interpreter lexical.lex.c parser.tab.c parser.tab.h

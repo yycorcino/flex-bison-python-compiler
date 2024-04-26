@@ -1,5 +1,5 @@
 /*
- * Declarations for a calculator fb3-1
+ * Declarations for a calculator ast-tree.c
  */
 
 /* symbol table */
@@ -41,6 +41,9 @@ enum bifs
 { /* built-in functions */
   B_sqrt = 1,
   B_exp,
+  B_sin,
+  B_cos,
+  B_tan,
   B_log,
   B_print
 };
