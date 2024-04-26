@@ -19,7 +19,7 @@
 %left MUL DIV
 %nonassoc UMINUS
 
-/* grammer rules */
+/* grammar rules */
 %%
 
 program: program statements
